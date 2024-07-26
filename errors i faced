@@ -1,0 +1,31 @@
+#######Docker issue faced##########
+sudo docker run -p 8080:8080 hiteishh/go-web-app:v1 .
+error--docker: Error response from daemon: failed to create task for container: failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: exec:".": executable file not found in $PATH: unknown.
+ERRO[0000] error waiting for container: context canceled
+
+solution--Sometimes Docker caches old builds, so it's important to ensure the image is built fresh. Run:
+          sudo docker build --no-cache -t hiteishh/go-web-app:v1 .
+
+error-- version issue -- chk in docker files
+      user permission issue for docker- use sudo
+port issues---  sudo lsof -iTCP:8080 -sTCP:LISTEN    (shows ports running we can kill those--  sudo kill -9 5303 )
+
+
+ error-  le or directory
+[ec2-user@ip-172-31-21-15 go-web-app]$ sudo docker run -p 8080:8080 hiteishh/go-web-app
+Unable to find image 'hiteishh/go-web-app:latest' locally
+docker: Error response from daemon: pull access denied for hiteishh/go-web-app, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+
+requires docker login --
+                            docker login- username n passwrd  
+Username: hitesh262
+Password: hitesh123
+sudo docker push hiteishh/go-web-app:v1  - pushed to dockerhub check in dockerhub.io now.
+
+error while pushing image--
+  login to docker first create a repo there then docker images?
+?  tag the image- sudo docker images
+REPOSITORY            TAG       IMAGE ID       CREATED             SIZE
+hiteishh/go-web-app   v1        5766d44752aa   59 minutes ago      28.1MB
+  sudo docker tag 5766d44752aa hiteishh/go-web-app:v1
+  sudo docker push hiteishh/go-web-app:v1
